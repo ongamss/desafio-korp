@@ -22,11 +22,26 @@ var httpRequests = prometheus.NewCounter(
 	},
 )
 
+var requestDuration = prometheus.NewHistogram(
+	prometheus.HistogramOpts{
+		Name:    "http_request_duration_seconds",
+		Help:    "Tempo das requisições HTTP.",
+		Buckets: prometheus.DefBuckets,
+	},
+)
+
 func init() {
 	prometheus.MustRegister(httpRequests)
+	prometheus.MustRegister(requestDuration)
 }
 
 func projetoHandler(w http.ResponseWriter, r *http.Request) {
+	start := time.Now()
+
+	defer func() {
+		requestDuration.Observe(time.Since(start).Seconds())
+	}()
+
 	httpRequests.Inc()
 
 	resposta := Projeto{

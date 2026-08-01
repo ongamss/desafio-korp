@@ -8,4 +8,4 @@ repo_branch: main
 
 docker_compose_cmd: docker compose
 
-projeto_endpoint: http://localhost/projeto-korp
+projeto_endpoint: "https://desafio-korp.duckdns.org/projeto-korp"

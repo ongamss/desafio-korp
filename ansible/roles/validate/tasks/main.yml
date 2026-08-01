@@ -1,27 +1,22 @@
 ---
-
 - name: Validar endpoint da aplicação
-  uri:
-
+  ansible.builtin.uri:
     url: "{{ projeto_endpoint }}"
-
     method: GET
-
     return_content: yes
-
     status_code: 200
+    validate_certs: true
 
   register: resposta
 
 - name: Exibir resposta da aplicação
-  debug:
+  ansible.builtin.debug:
     var: resposta.json
 
 - name: Listar containers
-  command: docker ps
-
+  ansible.builtin.command: docker ps
   register: docker_ps
 
 - name: Mostrar containers
-  debug:
+  ansible.builtin.debug:
     var: docker_ps.stdout_lines

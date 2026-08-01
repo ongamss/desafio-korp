@@ -1,15 +1,15 @@
 ---
-
-- name: Provisionar ambiente Projeto Korp
-
+- name: Prepadar o servidor
   hosts: desafio
-
   become: true
 
   roles:
-
     - docker
 
-    - projeto
+- name: Deploy da aplicação
+  hosts: desafio
+  become: false
 
+  roles:
+    - projeto
     - validate

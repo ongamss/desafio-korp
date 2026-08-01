@@ -37,6 +37,9 @@ services:
       image: prom/prometheus:latest
       command:
         - '--config.file=/etc/prometheus/prometheus.yml'
+        - '--storage.tsdb.path=/prometheus'
+        - '--storage.tsdb.retention.time=7d'
+        - '--storage.tsdb.retention.size=1GB'       
         - '--web.external-url=/prometheus'
         - '--web.route-prefix=/'
       container_name: prometheus
@@ -47,6 +50,7 @@ services:
         - "9090"
       volumes:
         - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+        - prometheus-data:/prometheus
       networks:
         - korp-network
 
@@ -81,3 +85,5 @@ services:
 networks:
   korp-network:
     driver: bridge
+volumes:
+  prometheus-data:

@@ -244,6 +244,20 @@ Grafana provisionado automaticamente via arquivos YAML e JSON.
 - Certificados Let's Encrypt
 
 ---
+## 🏗️ Arquitetura da Solução
+
+A solução foi projetada seguindo boas práticas de DevOps e Cloud Native (AWS).
+
+- Aplicação desacoplada da infraestrutura.
+- Containerização completa.
+- Reverse Proxy dedicado.
+- Monitoramento integrado.
+- Publicação segura via HTTPS.
+- Provisionamento automatizado.
+- Arquitetura reproduzível.
+- Serviços isolados em rede Docker.
+
+---
 
 # Autor
 

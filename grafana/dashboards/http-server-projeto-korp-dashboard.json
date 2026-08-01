@@ -74,6 +74,26 @@
             "lastNotNull"
           ]
         }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "color": "red",
+                  "text": "OFF"
+                },
+                "1": {
+                  "color": "green",
+                  "text": "ON"
+                }
+              }
+            }
+          ]
+        },
+        "overrides": []
       }
     },
     {

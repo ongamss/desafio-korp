@@ -1,93 +1,63 @@
 services:
 
   http-server-projeto-korp:
-
     build:
       context: ./app
-
     image: http-server-projeto-korp:1.0
-
     container_name: http-server-projeto-korp
-
     restart: unless-stopped
-
     expose:
       - "8080"
-
     networks:
       - korp-network
 
   nginx:
-
     image: nginx:latest
-
     container_name: nginx
-
     restart: unless-stopped
-
     depends_on:
       - http-server-projeto-korp
-
     ports:
       - "80:80"
-
     volumes:
       - ./nginx/http-server-projeto-korp.conf:/etc/nginx/conf.d/default.conf:ro
-
     networks:
       - korp-network
 
   prometheus:
-
       image: prom/prometheus:latest
-
+      command:
+        - '--config.file=/etc/prometheus/prometheus.yml'
+        - '--web.external-url=/prometheus'
+        - '--web.route-prefix=/'
       container_name: prometheus
-
       restart: unless-stopped
-
-      ports:
-        - "9090:9090"
-
+      expose:
+        - "9090"
       volumes:
         - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-
       networks:
         - korp-network
 
   grafana:
-
       image: grafana/grafana:latest
-
       container_name: grafana
-
       restart: unless-stopped
-
       depends_on:
-
         - prometheus
-
-      ports:
-
-        - "3000:3000"
-
+      expose:
+        - "3000"
       environment:
-
+        GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s/grafana/"
+        GF_SERVER_SERVE_FROM_SUB_PATH: "true"      
         GF_SECURITY_ADMIN_USER: admin
-
         GF_SECURITY_ADMIN_PASSWORD: admin
-
       volumes:
-
         - ./grafana/provisioning:/etc/grafana/provisioning
-
         - ./grafana/dashboards:/var/lib/grafana/dashboards
-
       networks:
-
         - korp-network
 
 networks:
-
   korp-network:
-
     driver: bridge

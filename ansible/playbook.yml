@@ -1,0 +1,15 @@
+---
+
+- name: Provisionar ambiente Projeto Korp
+
+  hosts: desafio
+
+  become: true
+
+  roles:
+
+    - docker
+
+    - projeto
+
+    - validate

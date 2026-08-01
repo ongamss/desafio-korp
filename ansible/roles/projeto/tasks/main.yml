@@ -1,0 +1,27 @@
+---
+
+- name: Criar diretório do projeto
+  file:
+    path: "{{ projeto_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Clonar repositório
+  ansible.builtin.git:
+    repo: "{{ repo_url }}"
+    dest: "{{ projeto_dir }}"
+    version: "{{ repo_branch }}"
+    force: yes
+    accept_hostkey: true
+    update: true
+
+- name: Executar Docker Compose
+  command:
+
+    cmd: "{{ docker_compose_cmd }} up -d --build"
+
+    chdir: "{{ projeto_dir }}"
+
+- name: Aguardar containers iniciarem
+  pause:
+    seconds: 20

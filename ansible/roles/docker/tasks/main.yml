@@ -1,0 +1,40 @@
+---
+
+- name: Atualizar cache do apt
+  apt:
+    update_cache: yes
+
+- name: Instalar dependências
+  apt:
+    name:
+      - git
+      - curl
+      - ca-certificates
+      - gnupg
+      - lsb-release
+    state: present
+
+- name: Instalar Docker
+  shell: |
+    curl -fsSL https://get.docker.com | sh
+  args:
+    creates: /usr/bin/docker
+
+- name: Adicionar usuário ao grupo docker
+  user:
+    name: "{{ ansible_user | default('ubuntu') }}"
+    groups: docker
+    append: yes
+
+- name: Habilitar Docker
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Verificar versão do Docker
+  command: docker --version
+  register: docker_version
+
+- debug:
+    var: docker_version.stdout

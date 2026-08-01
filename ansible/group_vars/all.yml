@@ -1,0 +1,11 @@
+---
+
+projeto_dir: /opt/desafio-korp
+
+repo_url: git@github.com:ongamss/desafio-korp.git
+
+repo_branch: main
+
+docker_compose_cmd: docker compose
+
+projeto_endpoint: http://localhost/projeto-korp

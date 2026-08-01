@@ -1,5 +1,5 @@
 ---
-- name: Prepadar o servidor
+- name: Preparar o servidor
   hosts: desafio
   become: true
 

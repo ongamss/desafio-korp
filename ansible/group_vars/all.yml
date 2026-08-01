@@ -1,6 +1,6 @@
 ---
 
-projeto_dir: projeto_dir: "{{ ansible_env.HOME }}/desafio-korp"
+projeto_dir: "{{ ansible_env.HOME }}/desafio-korp"
 
 repo_url: git@github.com:ongamss/desafio-korp.git
 

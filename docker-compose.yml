@@ -5,6 +5,8 @@ services:
       context: ./app
     image: http-server-projeto-korp:1.0
     container_name: http-server-projeto-korp
+    environment:
+      TZ: America/Fortaleza    
     restart: unless-stopped
     expose:
       - "8080"
@@ -14,6 +16,8 @@ services:
   nginx:
     image: nginx:latest
     container_name: nginx
+    environment:
+      TZ: America/Fortaleza       
     restart: unless-stopped
     depends_on:
       - http-server-projeto-korp
@@ -36,6 +40,8 @@ services:
         - '--web.external-url=/prometheus'
         - '--web.route-prefix=/'
       container_name: prometheus
+      environment:
+        TZ: America/Fortaleza         
       restart: unless-stopped
       expose:
         - "9090"
@@ -47,6 +53,8 @@ services:
   grafana:
       image: grafana/grafana:latest
       container_name: grafana
+      environment:
+        TZ: America/Fortaleza         
       restart: unless-stopped
       depends_on:
         - prometheus
@@ -66,10 +74,10 @@ services:
   certbot:
     image: certbot/certbot
     container_name: certbot
-    restart: unless-stopped
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
+    entrypoint: /bin/sh
 
 networks:
   korp-network:
